@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
+    
+    <link rel="stylesheet" href="{% static 'main/images/logo.png' %}">
+    <title>{% block title %}Django Delights Inventory Management System{% endblock %}</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
 </head>
 <body>
-    
+    <main>
+        <div class="logo"><a href="{% url 'index' %}">
+            <img src="{% static 'main/images/logo.JPG'%}"></a></div>
+        {% block content %}
+        {% endblock %}
+    </main>  
 </body>
 </html>
