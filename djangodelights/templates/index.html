@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% extends 'base.html' %}
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-{% extends 'base.html' %}
+
 
 </head>
 <body>
@@ -11,7 +13,7 @@
         Welcome to django delight 
 
         <button href= "{% static 'login.html' %}">log in</button>
-        
+
     {% endblock %}
 </body>
 </html>
