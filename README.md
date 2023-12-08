@@ -1,2 +1,2 @@
-# Django Delights Inventory Manager - Django-Mongodb
+# Django Delights Inventory Manager - Django-Postgres
  
