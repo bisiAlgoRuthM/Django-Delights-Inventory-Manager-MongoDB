@@ -44,6 +44,3 @@ def add_recipe_requirement(request):
 def success_page(request):
     return render(request, 'success_page.html')
     
-def purchase_records(request):
-    if request.method == 'POST':
-        records = Purchase.objects.all()
