@@ -1,0 +1,8 @@
+<!-- add_ingredient.html -->
+
+<h2>Add Ingredient</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add</button>
+</form>

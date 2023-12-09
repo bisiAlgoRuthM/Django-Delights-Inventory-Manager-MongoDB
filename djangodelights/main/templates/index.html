@@ -10,9 +10,10 @@
 </head>
 <body>
     {% block content %}
-        Welcome to django delight 
+        <h2>Welcome to Django delight Inventory Dashboard</h2>
 
-        <button href= "{% static 'login.html' %}">log in</button>
+         <button href="{% url 'add_ingredient' %}">Add Ingredient</button>
+
 
     {% endblock %}
 </body>
