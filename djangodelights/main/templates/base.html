@@ -3,14 +3,14 @@
 <head>
 
     {% load static %}
-    <link rel="stylesheet" href="{% static 'main/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <title>{% block title %}Django Delights Inventory Management System{% endblock %}</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
     <main>
-         <img src= "{% static 'main/logo.JPG' %}" alt="logo">
+         <img class= 'logo' src= "{% static 'images/logo.JPG' %}" alt="logo">
         </div>
         {% block content %}
 

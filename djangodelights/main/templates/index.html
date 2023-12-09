@@ -10,9 +10,12 @@
 </head>
 <body>
     {% block content %}
-        <h2>Welcome to Django delight Inventory Dashboard</h2>
+        <h2>Welcome to Django Delights Inventory Dashboard</h2>
 
-         <button href="{% url 'add_ingredient' %}">Add Ingredient</button>
+         <a href="{% url 'add_ingredient' %}">Add Ingredient</a>
+         <a href="{% url 'add_recipe_requirement' %}">Add Recipe Requirements</a>
+         <a href="{% url 'add_menu_item' %}">Add Menu Item</a>
+         <a href = "{% url 'purchase_records' %}">View Purchase Records</a>
 
 
     {% endblock %}

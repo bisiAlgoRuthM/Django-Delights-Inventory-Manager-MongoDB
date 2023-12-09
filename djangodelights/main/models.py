@@ -20,6 +20,7 @@ class MenuItem(models.Model):
 
     def __str__(self):
         return self.title
+    
 
 #The amount of each ingredient required for the recipe
 class RecipeRequirement(models.Model):
@@ -34,17 +35,15 @@ class RecipeRequirement(models.Model):
     def __str__(self):
         return f"{self.menu_item} - {self.quantity}"
     
- 
-
 
 class Purchase(models.Model):
     created_at = models.DateField(auto_now_add=True)
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
-    menu_items = models.ManyToManyField(MenuItem, through='PurchaseItem')
+    purchase_items = models.ManyToManyField(MenuItem, through='PurchaseItem')
 
     def calculate_total_price(self):
         total = 0
-        for purchase_item in self.purchase_item_set.all():
+        for purchase_item in self.purchase_items.all():
             total += purchase_item.menu_item.price * purchase_item.quantity
         self.total_price = total
         self.save()
