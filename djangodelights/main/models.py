@@ -44,7 +44,7 @@ class Purchase(models.Model):
     def calculate_total_price(self):
         total = 0
         for purchase_item in self.purchase_items.all():
-            total += purchase_item.menu_item.price * purchase_item.quantity
+            total += purchase_item.calculate_item_price()
         self.total_price = total
         self.save()
 
@@ -60,6 +60,9 @@ class PurchaseItem(models.Model):
     purchase = models.ForeignKey(Purchase, on_delete=models.CASCADE)
     menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
+
+    def calculate_item_price(self):
+        return self.menu
 
 
 

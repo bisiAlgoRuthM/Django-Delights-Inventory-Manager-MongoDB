@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .forms import IngredientForm, RecipeRequirementForm, MenuItemForm
-from .models import Purchase
+from .forms import IngredientForm, RecipeRequirementForm, MenuItemForm, PurchaseForm
+from .models import Purchase, MenuItem, PurchaseItem
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
@@ -44,3 +44,27 @@ def add_recipe_requirement(request):
 def success_page(request):
     return render(request, 'success_page.html')
     
+def new_purchase(request):
+    if request.method == "POST":
+
+        form = PurchaseForm(request.POST)
+        if form.is_valid():
+            menu_item_id = form.cleaned_data['menu_item']
+            menu_item = MenuItem.objects.all(pk=menu_item_id)
+            quantity = form.cleaned_data['quantity']
+
+            new_purchase = Purchase.objects.create(total_price = 0)
+
+            purchase_item = PurchaseItem.objects.create(
+                purchase = new_purchase,
+                menu_item = menu_item,
+                quantity = quantity 
+            )
+            new_purchase.save()
+
+            return redirect('purchase_success')
+        
+        else:
+            form = PurchaseForm()
+        return render(request, 'purchase.html', {'form':form})
+
