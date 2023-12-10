@@ -62,8 +62,14 @@ class PurchaseItem(models.Model):
     quantity = models.PositiveIntegerField()
 
     def calculate_item_price(self):
-        return self.menu
-
+        return self.menu_item.price * self.quantity
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.purchase.calculate_total_price()
+        
+    def __str__(self):
+        return f"Purchase Item: {self.menu_item.title}, Quantity: {self.quantity}"
 
 
 

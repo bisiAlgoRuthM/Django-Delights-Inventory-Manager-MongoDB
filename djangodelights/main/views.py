@@ -43,28 +43,31 @@ def add_recipe_requirement(request):
 
 def success_page(request):
     return render(request, 'success_page.html')
-    
+
+def purchase_success(request):
+    return render(request, 'purchase_success.html')
+
 def new_purchase(request):
     if request.method == "POST":
-
         form = PurchaseForm(request.POST)
         if form.is_valid():
             menu_item_id = form.cleaned_data['menu_item']
-            menu_item = MenuItem.objects.all(pk=menu_item_id)
+            menu_item = MenuItem.objects.get(pk=menu_item_id)
             quantity = form.cleaned_data['quantity']
 
-            new_purchase = Purchase.objects.create(total_price = 0)
+            new_purchase = Purchase.objects.create(total_price=0)
 
             purchase_item = PurchaseItem.objects.create(
-                purchase = new_purchase,
-                menu_item = menu_item,
-                quantity = quantity 
+                purchase=new_purchase,
+                menu_item=menu_item,
+                quantity=quantity
             )
+
             new_purchase.save()
 
             return redirect('purchase_success')
-        
-        else:
-            form = PurchaseForm()
-        return render(request, 'purchase.html', {'form':form})
+    else:
+        form = PurchaseForm()
+    
+    return render(request, 'purchase.html', {'form': form})
 
