@@ -46,7 +46,11 @@ class PurchaseForm(forms.ModelForm):
         model = Purchase
         fields = ['total_price', 'purchase_items']
 
-class PurchaseItem(forms.ModelForm):
+class PurchaseItemForm(forms.ModelForm):
     class Meta:
         model = PurchaseItem
-        fields = ['purchase', 'menu_item', 'quantity']
+        fields = ['menu_item', 'quantity']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['quantity'].widget = forms.NumberInput(attrs={'min': 0})

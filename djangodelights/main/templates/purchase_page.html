@@ -1,0 +1,9 @@
+<form method="POST">
+    {% csrf_token %}
+    {% for item in menu_items %}
+        <p>{{ item.title }} - ${{ item.price }}</p>
+        <input type="number" name="quantity_{{ item.id }}" value="0" min="0">
+        <p>Subtotal: $<span id="subtotal_{{ item.id }}">0.00</span></p>
+    {% endfor %}
+    <button type="submit">Add to Cart</button>
+</form>

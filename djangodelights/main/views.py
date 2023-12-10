@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import IngredientForm, RecipeRequirementForm, MenuItemForm, PurchaseForm
+from .forms import IngredientForm, RecipeRequirementForm, MenuItemForm, PurchaseForm, PurchaseItemForm
 from .models import Purchase, MenuItem, PurchaseItem
 # Create your views here.
 def index(request):
@@ -71,3 +71,15 @@ def new_purchase(request):
     
     return render(request, 'purchase.html', {'form': form})
 
+def purchase_page(request):
+    menu_items = MenuItem.objects.all()
+    if request.method == "POST":
+        form = PurchaseItemForm(request.POST)
+        if form.is_valid():
+            purchase_item = form.save(commit=False)
+            purchase_item.calculate_sub_total()
+            purchase_item.save()
+            return redirect('purchase_success')  # Redirect to a success page or any other page
+    else:
+        form = PurchaseItemForm()
+    return render(request, 'purchase_page.html', {'menu_items': menu_items, 'form': form})
