@@ -36,6 +36,7 @@ class RecipeRequirement(models.Model):
         return f"{self.menu_item} - {self.quantity}"
     
 
+
 class Purchase(models.Model):
     created_at = models.DateField(auto_now_add=True)
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -43,8 +44,8 @@ class Purchase(models.Model):
 
     def calculate_total_price(self):
         total = 0
-        for purchase_item in self.purchase_items.all():
-            total += purchase_item.calculate_item_price()
+        for purchase_item in PurchaseItem.objects.filter(purchase = self):
+            total += purchase_item.sub_total
         self.total_price = total
         self.save()
 
@@ -53,16 +54,18 @@ class Purchase(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.created_at}"
+        return f"Purchase {self.id} - Total Price: {self.total_price} - {self.created_at}"
     
+
 
 class PurchaseItem(models.Model):
     purchase = models.ForeignKey(Purchase, on_delete=models.CASCADE)
     menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
+    sub_total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
-    def calculate_item_price(self):
-        return self.menu_item.price * self.quantity
+    def calculate_sub_total(self):
+        self.sub_total = self.menu_item.price * self.quantity
     
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -70,6 +73,5 @@ class PurchaseItem(models.Model):
         
     def __str__(self):
         return f"Purchase Item: {self.menu_item.title}, Quantity: {self.quantity}"
-
 
 
