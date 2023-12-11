@@ -1,9 +1,11 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 
 const AddIngredientScreen = () => {
     return(
         <View style= {styles.screen}>
-            <Text>This is the home screen</Text>
+            <Text>Add Ingredients</Text>
+            <TextInput></TextInput>
+            
         </View>
     );
 }
